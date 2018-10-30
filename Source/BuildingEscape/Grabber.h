@@ -30,7 +30,7 @@ private:
 	// How far ahead of the player can we reach in centimeters
 	float Reach = 100.f;
 
-	UPhysicsHandleComponent *PhysicsHandler = nullptr;
+	UPhysicsHandleComponent *PhysicsHandle = nullptr;
 
 	UInputComponent *InputComponent = nullptr;
 
