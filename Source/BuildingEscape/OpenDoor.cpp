@@ -36,19 +36,19 @@ void UOpenDoor::BeginPlay()
 }
 
 
-void UOpenDoor::OpenDoor()
-{
-	// Set the door rotation
-	// Owner->SetActorRotation(FRotator(0.f, OpenAngle, 0.f));	// pitch, yaw, rolling
-	OnOpenRequest.Broadcast();
-}
+//void UOpenDoor::OpenDoor()
+//{
+//	// Set the door rotation
+//	// Owner->SetActorRotation(FRotator(0.f, OpenAngle, 0.f));	// pitch, yaw, rolling
+//	OnOpenRequest.Broadcast();
+//}
 
 
-void UOpenDoor::CloseDoor()
-{
-	// Set the door rotation
-	Owner->SetActorRotation(FRotator(0.f, 0.f, 0.f));	// pitch, yaw, rolling
-}
+//void UOpenDoor::CloseDoor()
+//{
+//	// Set the door rotation
+//	Owner->SetActorRotation(FRotator(0.f, 0.f, 0.f));	// pitch, yaw, rolling
+//}
 
 
 // Called every frame
@@ -60,17 +60,22 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	// if (PressurePlate && PressurePlate->IsOverlappingActor(ActorThatOpens))
 
 	// Poll the Trigger Volume 
-	if (GetTotalMassOfActorsOnPlate() > 30.f)		// TODO make into a parameter
+	if (GetTotalMassOfActorsOnPlate() > TriggerMass)		// TODO make into a parameter
 	{
-		OpenDoor();
-		LastDoorOpenTime = GetWorld()->GetTimeSeconds();
+		OnOpen.Broadcast();
+		//OpenDoor();
+		//LastDoorOpenTime = GetWorld()->GetTimeSeconds();
+	}
+	else
+	{
+		OnClose.Broadcast();		
 	}
 
 	// Check if it's time to close the door
-	if (GetWorld()->GetTimeSeconds() - LastDoorOpenTime > DoorCloseDelay) 
-	{
-		CloseDoor();
-	}
+	//if (GetWorld()->GetTimeSeconds() - LastDoorOpenTime > DoorCloseDelay) 
+	//{
+	//	CloseDoor();
+	//}
 }
 
 float UOpenDoor::GetTotalMassOfActorsOnPlate()
